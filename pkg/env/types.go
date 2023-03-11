@@ -4,6 +4,7 @@ package env
 type Env struct {
 	OpenAIApiToken   string
 	TelegramBotToken string
+	AllowedUsers     map[string]bool
 }
 
 // EnvInstance is the global instance of Env.

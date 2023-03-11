@@ -3,6 +3,7 @@ package bot
 import (
 	"log"
 
+	"github.com/rusik69/chatgpt-tg/pkg/env"
 	"github.com/rusik69/chatgpt-tg/pkg/openaiclient"
 	"github.com/rusik69/chatgpt-tg/pkg/telegramclient"
 )
@@ -13,6 +14,10 @@ func Run() {
 	for update := range updates {
 		if update.Message != nil {
 			log.Printf("[%s] %s\n", update.Message.From.UserName, update.Message.Text)
+			if !env.EnvInstance.AllowedUsers[update.Message.From.UserName] {
+				telegramclient.Send(update, "You are not allowed to use this bot.")
+				continue
+			}
 			message, err := openaiclient.Generate(update.Message.Text)
 			if err != nil {
 				log.Println(err)
