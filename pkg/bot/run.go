@@ -26,7 +26,7 @@ func Run() {
 				telegramclient.Send(update, err.Error())
 				continue
 			}
-			log.Printf("[%s chatgpt] %s\n", update.Message.From.UserName, message)
+			log.Printf("[%s chatgpt] %s", update.Message.From.UserName, message)
 			telegramclient.Send(update, message)
 		}
 	}
