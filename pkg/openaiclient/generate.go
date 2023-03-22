@@ -16,6 +16,9 @@ func Generate(prompt, user string, d *map[string][]openai.ChatCompletionMessage)
 		Model:    openai.GPT3Dot5Turbo,
 		Messages: (*d)[user],
 	})
+	if len(resp.Choices) == 0 {
+		return "error", nil
+	}
 	content := resp.Choices[0].Message.Content
 	if err != nil {
 		return "", err
