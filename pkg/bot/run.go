@@ -2,6 +2,7 @@ package bot
 
 import (
 	"log"
+	"strings"
 
 	"github.com/rusik69/chatgpt-tg/pkg/env"
 	"github.com/rusik69/chatgpt-tg/pkg/openaiclient"
@@ -15,6 +16,22 @@ func Run() {
 	updates := telegramclient.GetUpdates()
 	for update := range updates {
 		if update.Message != nil {
+			if update.Message.Command() == "img" {
+				log.Printf("[%s img] %s\n", update.Message.From.UserName, update.Message.Text)
+				prompt := strings.Join(strings.Split(update.Message.Text, " ")[1:], " ")
+				if prompt == "" {
+					telegramclient.Send(update, "Please provide a prompt for image generator.")
+					continue
+				}
+				imgUrl, err := openaiclient.GenerateImage(prompt)
+				if err != nil {
+					log.Println(err)
+					telegramclient.Send(update, err.Error())
+					continue
+				}
+				telegramclient.Send(update, imgUrl)
+				continue
+			}
 			log.Printf("[%s] %s\n", update.Message.From.UserName, update.Message.Text)
 			if !env.EnvInstance.AllowedUsers[update.Message.From.UserName] {
 				telegramclient.Send(update, "You are not allowed to use this bot.")
