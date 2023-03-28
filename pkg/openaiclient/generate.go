@@ -14,11 +14,14 @@ func Generate(prompt, user string, d *map[string][]openai.ChatCompletionMessage)
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	resp, err := Client.CreateChatCompletion(ctx, openai.ChatCompletionRequest{
-		Model:    openai.GPT3Dot5Turbo,
+		Model:    openai.GPT4,
 		Messages: (*d)[user],
 	})
 	if ctx.Err() == context.DeadlineExceeded {
 		return "", errors.New("timeout")
+	}
+	if err != nil {
+		return "", err
 	}
 	if len(resp.Choices) == 0 {
 		return "", errors.New("no response from OpenAI")
