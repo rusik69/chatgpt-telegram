@@ -11,7 +11,7 @@ import (
 // Generate generates a response.
 func Generate(prompt, user string, d *map[string][]openai.ChatCompletionMessage) (string, error) {
 	appendResponse(prompt, user, d)
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
 	defer cancel()
 	resp, err := Client.CreateChatCompletion(ctx, openai.ChatCompletionRequest{
 		Model:    openai.GPT4,
