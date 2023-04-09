@@ -31,6 +31,9 @@ func Run() {
 				}
 				telegramclient.Send(update, imgUrl)
 				continue
+			} else if update.Message.Command() == "clear" {
+				d[update.Message.From.UserName] = []openai.ChatCompletionMessage{}
+				telegramclient.Send(update, "Chat history cleared.")
 			} else {
 				log.Printf("[%s] %s\n", update.Message.From.UserName, update.Message.Text)
 				if !env.EnvInstance.AllowedUsers[update.Message.From.UserName] {

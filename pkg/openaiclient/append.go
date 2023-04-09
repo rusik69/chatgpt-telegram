@@ -4,7 +4,7 @@ import openai "github.com/sashabaranov/go-openai"
 
 // appendResponse appends the response to the messages.
 func appendResponse(content, user string, d *map[string][]openai.ChatCompletionMessage) {
-	if len((*d)[user]) == 10 {
+	if len((*d)[user]) == 6 {
 		newSlice := (*d)[user][1:]
 		(*d)[user] = newSlice
 	}
