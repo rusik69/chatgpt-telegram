@@ -76,6 +76,7 @@ func Run() {
 				log.Printf("[%s] %s\n", username, message)
 				if len(d[username]) > 0 {
 					d[username] = []openai.ChatCompletionMessage{}
+					openaiclient.AppendResponse("", username, &d)
 				}
 				response, err := openaiclient.ChatGPT(message, username, d[username])
 				if err != nil {
