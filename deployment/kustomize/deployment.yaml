@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chargpt-tg
+  labels:
+    app: chargpt-tg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chargpt-tg
+  template:
+    metadata:
+      labels:
+        app: chargpt-tg
+    spec:
+      containers:
+      - name: chargpt-tg
+        image: loqutus/chargpt-tg:latest
