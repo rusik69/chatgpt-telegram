@@ -74,10 +74,10 @@ func Run() {
 				telegramclient.Send(update, response)
 			default:
 				log.Printf("[%s] %s\n", username, message)
-				openaiclient.AppendResponse(message, username, &d)
 				if len(d[username]) > 0 {
 					d[username] = []openai.ChatCompletionMessage{}
 				}
+				openaiclient.AppendResponse(message, username, &d)
 				response, err := openaiclient.ChatGPT(message, username, d[username])
 				if err != nil {
 					log.Println(err)
@@ -85,7 +85,7 @@ func Run() {
 					continue
 				}
 				log.Printf("[%s chatgpt] %s", username, response)
-				telegramclient.Send(update, message)
+				telegramclient.Send(update, response)
 			}
 		}
 	}
