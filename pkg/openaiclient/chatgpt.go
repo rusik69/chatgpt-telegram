@@ -8,14 +8,13 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 )
 
-// Generate generates a response.
-func Generate(prompt, user string, d *map[string][]openai.ChatCompletionMessage) (string, error) {
-	appendResponse(prompt, user, d)
+// ChatGPT generates a response.
+func ChatGPT(prompt, user string, m []openai.ChatCompletionMessage) (string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 	resp, err := Client.CreateChatCompletion(ctx, openai.ChatCompletionRequest{
 		Model:    openai.GPT4,
-		Messages: (*d)[user],
+		Messages: m,
 	})
 	if ctx.Err() == context.DeadlineExceeded {
 		return "", errors.New("timeout")
@@ -30,6 +29,5 @@ func Generate(prompt, user string, d *map[string][]openai.ChatCompletionMessage)
 	if err != nil {
 		return "", err
 	}
-	appendResponse(content, user, d)
 	return content, nil
 }
