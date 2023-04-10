@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chargpt-tg
+  name: chatgpt-tg
   labels:
-    app: chargpt-tg
+    app: chatgpt-tg
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chargpt-tg
+      app: chatgpt-tg
   template:
     metadata:
       labels:
-        app: chargpt-tg
+        app: chatgpt-tg
     spec:
       containers:
-      - name: chargpt-tg
-        image: loqutus/chargpt-tg:latest
+      - name: chatgpt-tg
+        image: loqutus/chatgpt-tg:latest
