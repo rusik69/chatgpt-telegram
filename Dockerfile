@@ -1,7 +1,7 @@
 FROM golang:1.20-alpine AS build-env
 WORKDIR /go/src/github.com/rusik69/chatgpt-tg
 COPY . ./
-RUN apk add --no-cache make
+RUN apk add --no-cache make bash
 RUN make
 
 FROM alpine:latest
