@@ -16,9 +16,9 @@ build:
 
 docker:
 	docker system prune -a
-	docker build -t loqutus/ds0-$(BINARY_NAME):$(IMAGE_TAG) -f Dockerfile .
-	docker push loqutus/ds0-$(BINARY_NAME):$(IMAGE_TAG)
-	docker tag loqutus/ds0-$(BINARY_NAME):$(IMAGE_TAG) loqutus/ds0-$(BINARY_NAME):latest
-	docker push loqutus/ds0-$(BINARY_NAME):latest
+	docker build -t loqutus/$(BINARY_NAME):$(IMAGE_TAG) -f Dockerfile .
+	docker push loqutus/$(BINARY_NAME):$(IMAGE_TAG)
+	docker tag loqutus/$(BINARY_NAME):$(IMAGE_TAG) loqutus/$(BINARY_NAME):latest
+	docker push loqutus/$(BINARY_NAME):latest
 
 default: tidy build
