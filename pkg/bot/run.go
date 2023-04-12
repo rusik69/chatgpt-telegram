@@ -2,6 +2,7 @@ package bot
 
 import (
 	"log"
+	"os"
 
 	"github.com/rusik69/chatgpt-tg/pkg/env"
 	"github.com/rusik69/chatgpt-tg/pkg/huggingface"
@@ -36,26 +37,35 @@ func Run() {
 					telegramclient.Send(update, err.Error())
 					continue
 				}
-				telegramclient.Send(update, imgUrl)
+				err = telegramclient.Send(update, imgUrl)
+				if err != nil {
+					log.Println(err)
+				}
 			case "sd":
 				message = GetMessage(&update)
 				log.Printf("[%s stablediffusion] %s\n", username, message)
-				prompt := GetMessage(&update)
-				if prompt == "" {
+				if message == "" {
 					telegramclient.Send(update, "Please provide a prompt for stablediffusion.")
 					continue
 				}
-				url, err := huggingface.StableDiffusion(prompt)
+				photoName, err := huggingface.StableDiffusion(message)
 				if err != nil {
 					log.Println(err)
 					telegramclient.Send(update, err.Error())
 					continue
 				}
-				telegramclient.Send(update, url)
+				err = telegramclient.SendPhoto(update, photoName)
+				if err != nil {
+					log.Println(err)
+				}
+				os.Remove(photoName)
 			case "clear":
 				log.Printf("[%s clear]\n", username)
 				d[username] = []openai.ChatCompletionMessage{}
-				telegramclient.Send(update, "Chat history cleared.")
+				err := telegramclient.Send(update, "Chat history cleared.")
+				if err != nil {
+					log.Println(err)
+				}
 			case "help":
 				log.Printf("[%s help]\n", username)
 				telegramclient.Send(update, "Available commands:\n/dialogue - chatgpt dialogue mod\n/img - generate an image\n/sd - generate image using StableDiffusion\n/clear - clear chat history\n/help - show this message")
@@ -71,7 +81,10 @@ func Run() {
 				}
 				openaiclient.AppendResponse(response, username, &d)
 				log.Printf("[%s dialogue] %s", username, response)
-				telegramclient.Send(update, response)
+				err = telegramclient.Send(update, response)
+				if err != nil {
+					log.Println(err)
+				}
 			default:
 				log.Printf("[%s] %s\n", username, message)
 				if len(d[username]) > 0 {
@@ -85,7 +98,10 @@ func Run() {
 					continue
 				}
 				log.Printf("[%s chatgpt] %s", username, response)
-				telegramclient.Send(update, response)
+				err = telegramclient.Send(update, response)
+				if err != nil {
+					log.Println(err)
+				}
 			}
 		}
 	}
