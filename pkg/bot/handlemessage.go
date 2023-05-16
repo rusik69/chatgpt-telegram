@@ -74,6 +74,24 @@ func HandleMessage(update tgbotapi.Update, d map[string][]openai.ChatCompletionM
 			if err != nil {
 				log.Println(err)
 			}
+		case "bert":
+			message = GetMessage(&update)
+			log.Printf("[%s bert] %s\n", username, message)
+			if message == "" {
+				telegramclient.Send(update, "Please provide a prompt for bert.")
+				return
+			}
+			reply, err := huggingface.Bert(message)
+			if err != nil {
+				log.Println(err)
+				telegramclient.Send(update, err.Error())
+				return
+			}
+			log.Printf("[%s bert] %s", username, reply)
+			err = telegramclient.Send(update, reply)
+			if err != nil {
+				log.Println(err)
+			}
 		case "clear":
 			log.Printf("[%s clear]\n", username)
 			d[username] = []openai.ChatCompletionMessage{}
@@ -83,7 +101,7 @@ func HandleMessage(update tgbotapi.Update, d map[string][]openai.ChatCompletionM
 			}
 		case "help":
 			log.Printf("[%s help]\n", username)
-			telegramclient.Send(update, "Available commands:\n/dialogue - chatgpt dialogue mod\n/bloom - bloom llm\n/img - generate an image\n/sd - generate image using StableDiffusion\n/clear - clear chat history\n/help - show this message")
+			telegramclient.Send(update, "Available commands:\n/dialogue - chatgpt dialogue mod\n/bert - bert llm\n/bloom - bloom llm\n/img - generate an image\n/sd - generate image using StableDiffusion\n/clear - clear chat history\n/help - show this message")
 		case "dialogue":
 			message = GetMessage(&update)
 			log.Printf("[%s dialogue] %s\n", username, message)

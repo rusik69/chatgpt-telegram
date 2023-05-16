@@ -1,7 +1,12 @@
 package huggingface
 
-// Request is a request.
+// SDRequest is a stablediffusion request.
 type SDRequest struct {
+	Inputs string `json:"inputs"`
+}
+
+// BertRequest is a bert request.
+type BertRequest struct {
 	Inputs string `json:"inputs"`
 }
 
@@ -14,4 +19,9 @@ type BloomRequest struct {
 // bloomResponse is a response from the bloom model.
 type bloomResponse struct {
 	GeneratedText string `json:"generated_text"`
+}
+
+// bertResponse is a response from the bert model.
+type bertResponse struct {
+	Sequence string `json:"sequence"`
 }
