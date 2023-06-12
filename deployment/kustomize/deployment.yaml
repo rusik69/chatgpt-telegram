@@ -17,3 +17,4 @@ spec:
       containers:
       - name: chatgpt-tg
         image: loqutus/chatgpt-tg:latest
+      ImagePullPolicy: Always
