@@ -17,4 +17,32 @@ spec:
       containers:
       - name: chatgpt-tg
         image: loqutus/chatgpt-tg:latest
+        resources:
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+          requests:
+            cpu: "0.1"
+            memory: "256Mi"
+        env:
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: apikeys
+              key: OPENAI_API_KEY
+        - name: TELEGRAM_BOT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: apikeys
+              key: TELEGRAM_BOT_TOKEN
+        - name: ALLOWED_USERS
+          valueFrom:
+            secretKeyRef:
+              name: apikeys
+              key: ALLOWED_USERS
+        - name: HUGGUNGFACE_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: apikeys
+              key: HUGGUNGFACE_TOKEN
       ImagePullPolicy: Always
