@@ -2,8 +2,8 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: all
 
-BINARY_NAME=chatgpt-tg
-IMAGE_TAG=$(shell git describe --tags --always)
+BINARY_NAME=chatgpt-telegram
+IMAGE_TAG=$(shell date +%Y%m%d%H%M%S)
 
 tidy:
 	go mod tidy

@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chatgpt-tg
+  name: chatgpt-telegram
   labels:
-    app: chatgpt-tg
+    app: chatgpt-telegram
   annotations:
     fluxcd.io/automated: "true"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chatgpt-tg
+      app: chatgpt-telegram
   template:
     metadata:
       labels:
-        app: chatgpt-tg
+        app: chatgpt-telegram
     spec:
       containers:
-      - name: chatgpt-tg
-        image: loqutus/chatgpt-tg:latest
+      - name: chatgpt-telegram
+        image: loqutus/chatgpt-telegram:latest
         resources:
           limits:
             cpu: "1"
