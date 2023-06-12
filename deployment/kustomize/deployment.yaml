@@ -13,6 +13,9 @@ spec:
     metadata:
       labels:
         app: chatgpt-tg
+      annotations:
+        nodeSelector:
+          kubernetes.io/arch: amd64
     spec:
       containers:
       - name: chatgpt-tg
