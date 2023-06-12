@@ -119,7 +119,7 @@ func HandleMessage(update tgbotapi.Update, d map[string][]openai.ChatCompletionM
 			}
 		case "help":
 			log.Printf("[%s help]\n", username)
-			telegramclient.Send(update, "Available commands:\n/dialogue - chatgpt dialogue mod\n/bert - bert llm\n/bloom - bloom llm\n/img - generate an image\n/sd - generate image using StableDiffusion\n/clear - clear chat history\n/help - show this message")
+			telegramclient.Send(update, "Available commands:\n/dialogue - chatgpt dialogue mod\n/bert - bert llm\n/bloom - bloom llm\n/img - generate an image\n/sd - generate image using StableDiffusion\n/openllama - generate text using openllama\n/clear - clear chat history\n/help - show this message")
 		case "dialogue":
 			message = GetMessage(&update)
 			log.Printf("[%s dialogue] %s\n", username, message)
