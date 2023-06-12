@@ -40,11 +40,11 @@ spec:
             secretKeyRef:
               name: apikeys
               key: ALLOWED_USERS
-        - name: HUGGUNGFACE_TOKEN
+        - name: HUGGINGFACE_TOKEN
           valueFrom:
             secretKeyRef:
               name: apikeys
-              key: HUGGUNGFACE_TOKEN
+              key: HUGGINGFACE_TOKEN
       ImagePullPolicy: Always
       nodeSelector:
           kubernetes.io/arch: amd64
