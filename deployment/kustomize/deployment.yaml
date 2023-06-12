@@ -13,9 +13,6 @@ spec:
     metadata:
       labels:
         app: chatgpt-tg
-      annotations:
-        nodeSelector:
-          kubernetes.io/arch: amd64
     spec:
       containers:
       - name: chatgpt-tg
@@ -49,3 +46,5 @@ spec:
               name: apikeys
               key: HUGGUNGFACE_TOKEN
       ImagePullPolicy: Always
+      nodeSelector:
+          kubernetes.io/arch: amd64
