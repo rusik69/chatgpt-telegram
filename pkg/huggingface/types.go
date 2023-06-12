@@ -25,3 +25,13 @@ type bloomResponse struct {
 type bertResponse struct {
 	Sequence string `json:"sequence"`
 }
+
+// llamaRequest is a llama request.
+type llamaRequest struct {
+	Inputs string `json:"inputs"`
+}
+
+// llamaResponse is a response from the llama model.
+type llamaResponse struct {
+	GeneratedText string `json:"generated_text"`
+}

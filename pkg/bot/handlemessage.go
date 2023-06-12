@@ -74,6 +74,24 @@ func HandleMessage(update tgbotapi.Update, d map[string][]openai.ChatCompletionM
 			if err != nil {
 				log.Println(err)
 			}
+		case "openllama":
+			message = GetMessage(&update)
+			log.Printf("[%s openllama] %s\n", username, message)
+			if message == "" {
+				telegramclient.Send(update, "Please provide a prompt for openllama.")
+				return
+			}
+			reply, err := huggingface.OpenLLama(message)
+			if err != nil {
+				log.Println(err)
+				telegramclient.Send(update, err.Error())
+				return
+			}
+			log.Printf("[%s openllama] %s", username, reply)
+			err = telegramclient.Send(update, reply)
+			if err != nil {
+				log.Println(err)
+			}
 		case "bert":
 			message = GetMessage(&update)
 			log.Printf("[%s bert] %s\n", username, message)
