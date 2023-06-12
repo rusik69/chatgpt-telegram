@@ -4,6 +4,8 @@ metadata:
   name: chatgpt-tg
   labels:
     app: chatgpt-tg
+  annotations:
+    fluxcd.io/automated: "true"
 spec:
   replicas: 1
   selector:
