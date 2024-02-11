@@ -24,4 +24,8 @@ docker:
 	docker tag loqutus/$(BINARY_NAME):$(IMAGE_TAG) loqutus/$(BINARY_NAME):latest
 	docker push loqutus/$(BINARY_NAME):latest
 
+update:
+	go get -u ./...
+	go mod tidy
+
 default: tidy build

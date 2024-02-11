@@ -15,7 +15,7 @@ func ChatGPT(prompt, user string, m []openai.ChatCompletionMessage) (string, err
 	resp, err := Client.CreateChatCompletion(ctx, openai.ChatCompletionRequest{
 		Model:     openai.GPT4TurboPreview,
 		Messages:  m,
-		MaxTokens: 1024,
+		MaxTokens: 8192,
 	})
 	if ctx.Err() == context.DeadlineExceeded {
 		return "", errors.New("timeout")

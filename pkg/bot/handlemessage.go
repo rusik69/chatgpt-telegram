@@ -2,11 +2,9 @@ package bot
 
 import (
 	"log"
-	"os"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/rusik69/chatgpt-tg/pkg/env"
-	"github.com/rusik69/chatgpt-tg/pkg/huggingface"
 	"github.com/rusik69/chatgpt-tg/pkg/openaiclient"
 	"github.com/rusik69/chatgpt-tg/pkg/telegramclient"
 	"github.com/sashabaranov/go-openai"
@@ -35,78 +33,6 @@ func HandleMessage(update tgbotapi.Update, d map[string][]openai.ChatCompletionM
 				return
 			}
 			err = telegramclient.Send(update, imgUrl)
-			if err != nil {
-				log.Println(err)
-			}
-		case "sd":
-			message = GetMessage(&update)
-			log.Printf("[%s stablediffusion] %s\n", username, message)
-			if message == "" {
-				telegramclient.Send(update, "Please provide a prompt for stablediffusion.")
-				return
-			}
-			photoName, err := huggingface.StableDiffusion(message)
-			if err != nil {
-				log.Println(err)
-				telegramclient.Send(update, err.Error())
-				return
-			}
-			err = telegramclient.SendPhoto(update, photoName)
-			if err != nil {
-				log.Println(err)
-			}
-			os.Remove(photoName)
-		case "bloom":
-			message = GetMessage(&update)
-			log.Printf("[%s bloom] %s\n", username, message)
-			if message == "" {
-				telegramclient.Send(update, "Please provide a prompt for bloom.")
-				return
-			}
-			reply, err := huggingface.Bloom(message)
-			if err != nil {
-				log.Println(err)
-				telegramclient.Send(update, err.Error())
-				return
-			}
-			log.Printf("[%s bloom] %s", username, reply)
-			err = telegramclient.Send(update, reply)
-			if err != nil {
-				log.Println(err)
-			}
-		case "openllama":
-			message = GetMessage(&update)
-			log.Printf("[%s openllama] %s\n", username, message)
-			if message == "" {
-				telegramclient.Send(update, "Please provide a prompt for openllama.")
-				return
-			}
-			reply, err := huggingface.OpenLLama(message)
-			if err != nil {
-				log.Println(err)
-				telegramclient.Send(update, err.Error())
-				return
-			}
-			log.Printf("[%s openllama] %s", username, reply)
-			err = telegramclient.Send(update, reply)
-			if err != nil {
-				log.Println(err)
-			}
-		case "bert":
-			message = GetMessage(&update)
-			log.Printf("[%s bert] %s\n", username, message)
-			if message == "" {
-				telegramclient.Send(update, "Please provide a prompt for bert.")
-				return
-			}
-			reply, err := huggingface.Bert(message)
-			if err != nil {
-				log.Println(err)
-				telegramclient.Send(update, err.Error())
-				return
-			}
-			log.Printf("[%s bert] %s", username, reply)
-			err = telegramclient.Send(update, reply)
 			if err != nil {
 				log.Println(err)
 			}
