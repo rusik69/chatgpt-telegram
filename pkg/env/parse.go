@@ -20,10 +20,6 @@ func Parse() (*Env, error) {
 	if allowedUsersStr == "" {
 		return nil, errors.New("ALLOWED_USERS is not set")
 	}
-	huggingFaceToken := os.Getenv("HUGGINGFACE_TOKEN")
-	if huggingFaceToken == "" {
-		return nil, errors.New("HUGGINGFACE_TOKEN is not set")
-	}
 	allowedUsers := make(map[string]bool)
 	for _, user := range strings.Split(allowedUsersStr, ",") {
 		allowedUsers[string(user)] = true
@@ -32,6 +28,5 @@ func Parse() (*Env, error) {
 		OpenAIApiToken:   openApiToken,
 		TelegramBotToken: telegramBotToken,
 		AllowedUsers:     allowedUsers,
-		HuggingFaceToken: huggingFaceToken,
 	}, nil
 }

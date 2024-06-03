@@ -13,7 +13,7 @@ func ChatGPT(prompt, user string, m []openai.ChatCompletionMessage) (string, err
 	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 	resp, err := Client.CreateChatCompletion(ctx, openai.ChatCompletionRequest{
-		Model:     openai.GPT4TurboPreview,
+		Model:     openai.GPT4o,
 		Messages:  m,
 		MaxTokens: 4096,
 	})
